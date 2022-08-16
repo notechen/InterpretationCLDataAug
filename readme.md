@@ -11,24 +11,7 @@ Extensive experiments are built on the benchmark datasets to verify the effectiv
 * CUDA
 * numpy
 
-## Pretraining
-Pretrain the model on CIFAR-10 with ACL(DS)
-```bash
-python train_simCLR.py ACL_DS --ACL_DS --data /path/to/data
-```
-Pretrain the model on CIFAR-100 with ACL(DS)
-```bash
-python train_simCLR.py ACL_DS_CIFAR100 --ACL_DS --dataset cifar100 --data /path/to/data
-```
-## Finetuning
-Adversarial finetune ACL(DS) pretraining model on CIFAR-10 (Need to do ACL(DS) pretraining on CIFAR10 first)
-```bash
-python train_trades.py ACL_DS_TUNE --checkpoint checkpoints/ACL_DS/model_1000.pt --cvt_state_dict --bnNameCnt 1 --decreasing_lr 40,60 --epochs 100 --data /path/to/data
-```
-Adversarial finetune ACL(DS) pretraining model on CIFAR-100 (Need to do ACL(DS) pretraining on CIFAR100 first)
-```bash
-python train_trades.py ACL_DS_CIFAR100_TUNE --dataset cifar100 --checkpoint checkpoints/ACL_DS_CIFAR100/model_1000.pt --cvt_state_dict --bnNameCnt 1 --data /path/to/data
-```
+
 
 # Acknowledge
 Trade fine-tuning code from [TRADE](https://github.com/yaodongyu/TRADES) (official code). 
