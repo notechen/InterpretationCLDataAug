@@ -234,15 +234,16 @@ def train(train_loader, model, optimizer, scheduler, epoch, log, num_classes):
         inputs = inputs.view(d[0]*2, d[2], d[3], d[4]).cuda()
 
         model.zero_grad()
-        p = model.eval()(inputs, 'normal')
+        # p = model.eval()(inputs, 'normal')
         inputs_adv = PGD_contrastive(model, inputs, num_classes, iters=args.pgd_iter)  # get adversarial input
-        inputs_adv = torch.nn.Parameter(inputs_adv)
-        new_p = model.eval()(inputs_adv.cuda(), 'normal')
+        # inputs_adv = torch.nn.Parameter(inputs_adv)
+        # new_p = model.eval()(inputs_adv.cuda(), 'normal')
             
-        kl = F.kl_div(F.log_softmax(new_p, dim=-1), F.softmax(p, dim=-1), reduction='sum')
-        kl.backward()
-        CAM = torch.sum(inputs_adv.grad, dim=1).cpu().numpy()
-        inputs_adv.grad = None
+        # kl = F.kl_div(F.log_softmax(new_p, dim=-1), F.softmax(p, dim=-1), reduction='sum')
+        # kl.backward()
+        # CAM = torch.sum(inputs_adv.grad, dim=1).cpu().numpy()
+        CAM = torch.sum(torch.abs(inputs_adv - inputs), dim=1).cpu().numpy()
+        # inputs_adv.grad = None
         #print(CAM)
         #print(inputs.grad.shape)  # (1024, 3, 32, 32)
         #print(inputs.grad)
